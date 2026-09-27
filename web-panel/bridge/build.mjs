@@ -26,11 +26,7 @@ await build({
 });
 
 const rendererEntries = (await readdir(rendererScriptsRoot, { withFileTypes: true }))
-    .filter(
-        (entry) =>
-            entry.isFile() &&
-            entry.name.endsWith('.js'),
-    )
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.js'))
     .map((entry) => resolve(rendererScriptsRoot, entry.name));
 
 if (rendererEntries.length === 0) {
