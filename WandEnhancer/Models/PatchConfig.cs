@@ -4,7 +4,6 @@ namespace WandEnhancer.Models
 {
     public enum EPatchType
     {
-        ActivatePro = 1,
         DisableUpdates = 2,
         DevToolsOnF12 = 8,
         RemoteWebPanelPreview = 16

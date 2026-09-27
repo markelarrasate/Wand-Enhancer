@@ -25,7 +25,6 @@
     <!--#endregion -->
 
     <!--#region EnhanceVectorsPopup -->
-    <s:String x:Key="pv_activate_pro">WeMod Pro を有効化</s:String>
     <s:String x:Key="pv_devtools">F12でDevTools</s:String>
     <s:String x:Key="pv_disable_updates">アップデートを無効化</s:String>
     <s:String x:Key="pv_remote_web_panel_preview">リモートアクセスを有効化（ベータ）</s:String>

@@ -80,18 +80,13 @@ namespace WandEnhancer.View.Popups
 
         private void OnPatchButtonClick(object sender, RoutedEventArgs e)
         {
-            if (ActivateProBox.IsChecked != true && DisableUpdateBox.IsChecked != true &&
-                DevToolsHotkeyBox.IsChecked != true && RemoteWebPanelPreviewBox.IsChecked != true)
+            if (DisableUpdateBox.IsChecked != true && DevToolsHotkeyBox.IsChecked != true &&
+                RemoteWebPanelPreviewBox.IsChecked != true)
             {
                 return;
             }
             
             var result = new HashSet<EPatchType>();
-            if (ActivateProBox.IsChecked == true)
-            {
-                result.Add(EPatchType.ActivatePro);
-            }
-
             if (DisableUpdateBox.IsChecked == true)
             {
                 result.Add(EPatchType.DisableUpdates);

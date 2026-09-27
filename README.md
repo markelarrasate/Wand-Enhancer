@@ -13,6 +13,22 @@
 **🚨 IMPORTANT NOTICE: THIS PROJECT HAS NO OFFICIAL YOUTUBE TUTORIALS, GUIDES, OR PREBUILT EXECUTABLE DOWNLOADS. 🚨
 There are no official videos showing how to install or use this tool. Scammers are creating fake tutorials using this project's name and placing malware/password stealers in the video descriptions. Official GitHub releases contain release notes only, not `.exe` files. If you downloaded an `.exe` or archive from a YouTube link, a random website, or a third-party mirror, you did not get it from this project. We are not responsible for third-party downloads.**
 
+## 🍴 About this fork
+
+This fork tracks [k1tbyte/Wand-Enhancer](https://github.com/k1tbyte/Wand-Enhancer) with the
+**Pro activation patch removed**. Upstream ships an `ActivatePro` patch that rewrites the account
+response so Wand reports an active paid subscription; that patch, its payloads
+(`pro-subscription`, `pro-account-reducer`, `disable-native-pairing`) and the unused renderer-side
+variant are deleted here, so this build cannot unlock a subscription you do not have.
+
+What is kept: the Remote Web Panel, custom renderer scripts, the F12 DevTools hotkey and the
+client update blocker.
+
+Two caveats that are unchanged from upstream: the Remote Web Panel serves plain HTTP on port
+`3223` with **no authentication or pairing code**, so keep it on a trusted LAN/VPN; and the
+patcher is unsigned and clears the Electron ASAR integrity fuse via `WriteProcessMemory`, which
+antivirus software will flag.
+
 ## 👾 What does it access?
 
 The default .NET patcher modifies files in the selected local Wand installation and contains no update-checking or telemetry network code. Wand itself remains an online application, build tools restore declared dependencies, and the optional Remote Web Panel deliberately starts a LAN HTTP/WebSocket server and uses Wand API/CDN data. An explicit build-time option can include GitHub release notifications; that variant sends a GitHub API request with your IP and a User-Agent when Wand starts, but sends no Wand or account data and never downloads updates. Review the source and build the executable from your own fork; unsigned patching tools can trigger generic antivirus heuristics.

@@ -25,7 +25,6 @@
     <!--#endregion -->
 
     <!--#region EnhanceVectorsPopup -->
-    <s:String x:Key="pv_activate_pro">Активировать WeMod Pro</s:String>
     <s:String x:Key="pv_devtools">DevTools на F12</s:String>
     <s:String x:Key="pv_disable_updates">Отключить обновления</s:String>
     <s:String x:Key="pv_remote_web_panel_preview">Remote-доступ (beta)</s:String>

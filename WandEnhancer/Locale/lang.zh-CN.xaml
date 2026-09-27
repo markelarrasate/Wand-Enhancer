@@ -25,7 +25,6 @@
     <!--#endregion -->
 
     <!--#region EnhanceVectorsPopup -->
-    <s:String x:Key="pv_activate_pro">激活 WeMod Pro</s:String>
     <s:String x:Key="pv_devtools">按 F12 打开开发者工具</s:String>
     <s:String x:Key="pv_disable_updates">禁用更新</s:String>
     <s:String x:Key="pv_remote_web_panel_preview">启用远程访问（beta）</s:String>

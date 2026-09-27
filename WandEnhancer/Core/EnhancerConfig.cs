@@ -38,47 +38,6 @@ namespace WandEnhancer.Core
             return new Dictionary<EPatchType, PatchEntry[]>
             {
                 {
-                    EPatchType.ActivatePro,
-                    new[]
-                    {
-                        new PatchEntry
-                        {
-                            Name = "getUserAccount",
-                            SearchHints = new[] { "getUserAccount(" },
-                            Locate = js => ForceProSubscription(js, "getUserAccount")
-                        },
-                        new PatchEntry
-                        {
-                            Name = "setAccountWandBrandExperience",
-                            SearchHints = new[] { "setAccountWandBrandExperience(" },
-                            CapabilityHints = new[] { "/v3/account/brand_experience_wand" },
-                            Locate = js => ForceProSubscription(js, "setAccountWandBrandExperience")
-                        },
-                        new PatchEntry
-                        {
-                            // Language changes replace the account in the store.
-                            Name = "setAccountLanguage",
-                            SearchHints = new[] { "setAccountLanguage(" },
-                            Locate = js => ForceProSubscription(js, "setAccountLanguage")
-                        },
-                        new PatchEntry
-                        {
-                            // Covers account writes that bypass the API wrappers.
-                            Name = "setAccountReducer",
-                            SearchHints = new[] { "ACTION_SET_ACCOUNT" },
-                            Locate = LocateAccountReducer
-                        },
-                        new PatchEntry
-                        {
-                            // Native phone pairing signs out the patched desktop session.
-                            Name = "disableNativeRemotePairing",
-                            SearchHints = new[] { "requestRemoteAuthCode" },
-                            Locate = js => Edits(js.FindFunction("requestRemoteAuthCode")?
-                                .ReplaceBody(PatchPayload.Load("disable-native-pairing")))
-                        }
-                    }
-                },
-                {
                     EPatchType.DisableUpdates,
                     new[]
                     {
@@ -143,27 +102,6 @@ namespace WandEnhancer.Core
                     }
                 }
             };
-        }
-
-        /// <summary>Wraps the account-returning promise so the resolved account always reports an active subscription.</summary>
-        private static JsEdit[] ForceProSubscription(JsCursor js, string methodName)
-        {
-            return Edits(js.FindFunction(methodName)?.WrapReturn(PatchPayload.Load("pro-subscription")));
-        }
-
-        private static JsEdit[] LocateAccountReducer(JsCursor js)
-        {
-            int anchor = js.IndexOf("\"ACTION_SET_ACCOUNT\"");
-            var reducer = anchor < 0 ? null : js.FindFunctionAfter(anchor);
-            if (reducer == null)
-            {
-                return null;
-            }
-
-            // ${account} is a regex back-reference, not a PatchPayload placeholder.
-            return Edits(reducer.ReplaceInBody(
-                @"account:\s*(?<account>[\w$]+)",
-                PatchPayload.Load("pro-account-reducer")));
         }
 
         private static JsEdit[] LocateUpdateHandler(JsCursor js)

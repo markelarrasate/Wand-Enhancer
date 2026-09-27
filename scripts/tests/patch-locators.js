@@ -1,26 +1,3 @@
-export class Store {
-    getUserAccount(userId) {
-        return Promise.resolve({ id: userId, pro: false });
-    }
-    setAccountWandBrandExperience(exp) {
-        const uri = "/v3/account/brand_experience_wand";
-        return Promise.resolve(exp);
-    }
-    setAccountLanguage(lang) {
-        return Promise.resolve(lang);
-    }
-}
-
-const ACTION_SET_ACCOUNT_CONST = "ACTION_SET_ACCOUNT";
-export function accountReducer(state, action) {
-    const myAccount = action.payload;
-    return { ...state, account: myAccount };
-}
-
-export function requestRemoteAuthCode() {
-    return fetch('/api/remote/auth');
-}
-
 export function registerUpdate() {
     registerHandler("ACTION_CHECK_FOR_UPDATE", () => {
         checkForUpdates();

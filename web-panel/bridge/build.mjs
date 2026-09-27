@@ -25,14 +25,11 @@ await build({
     target: 'node16',
 });
 
-const EXCLUDED_RENDERER_SCRIPTS = new Set(['activate-pro.js']);
-
 const rendererEntries = (await readdir(rendererScriptsRoot, { withFileTypes: true }))
     .filter(
         (entry) =>
             entry.isFile() &&
-            entry.name.endsWith('.js') &&
-            !EXCLUDED_RENDERER_SCRIPTS.has(entry.name),
+            entry.name.endsWith('.js'),
     )
     .map((entry) => resolve(rendererScriptsRoot, entry.name));
 
