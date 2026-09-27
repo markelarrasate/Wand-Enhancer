@@ -54,13 +54,16 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource pv_devtools}" />
-            <CheckBox Grid.Row="0" Grid.Column="1" x:Name="DevToolsHotkeyBox" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <CheckBox Grid.Row="0" Grid.Column="1" x:Name="DevToolsHotkeyBox" HorizontalAlignment="Right" VerticalAlignment="Center"
+                      Checked="OnPatchSelectionChanged" Unchecked="OnPatchSelectionChanged" />
 
             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource pv_disable_updates}" />
-            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="DisableUpdateBox" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="DisableUpdateBox" HorizontalAlignment="Right" VerticalAlignment="Center"
+                      Checked="OnPatchSelectionChanged" Unchecked="OnPatchSelectionChanged" />
 
             <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource pv_remote_web_panel_preview}" />
-            <CheckBox Grid.Row="2" Grid.Column="1" x:Name="RemoteWebPanelPreviewBox" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <CheckBox Grid.Row="2" Grid.Column="1" x:Name="RemoteWebPanelPreviewBox" HorizontalAlignment="Right" VerticalAlignment="Center"
+                      Checked="OnPatchSelectionChanged" Unchecked="OnPatchSelectionChanged" />
 
             <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource pv_auto_apply}" />
             <CheckBox Grid.Row="3" Grid.Column="1" x:Name="AutoApplyBox" HorizontalAlignment="Right" VerticalAlignment="Center" />
@@ -117,8 +120,20 @@
                 </StackPanel>
             </Border>
 
-            <Button Grid.Row="5" Grid.ColumnSpan="2" Padding="0 5 0 5" Margin="0 15 0 0" Content="{DynamicResource pv_start}"
-                    Click="OnPatchButtonClick" />
+            <!-- Disabled while nothing is selected: patching with an empty selection is a no-op. -->
+            <Button Grid.Row="5" Grid.ColumnSpan="2" x:Name="StartButton" Padding="0 5 0 5" Margin="0 15 0 0"
+                    Content="{DynamicResource pv_start}" Click="OnPatchButtonClick">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource MutedForeground}" />
+                                <Setter Property="Opacity" Value="0.6" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
     </StackPanel>
 

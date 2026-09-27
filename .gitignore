@@ -149,3 +149,6 @@ appsettings.json
 web-panel/bridge/wand-remote-bridge.cjs
 .vscode
 docs
+
+
+./ci-artifact/WandEnhancer.exe

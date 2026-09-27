@@ -26,6 +26,30 @@ namespace WandEnhancer.View.Popups
             ScriptList.ItemsSource = _selectedScripts;
             LoadStrategies();
             UpdateScriptsEmptyState();
+            UpdateStartButtonState();
+        }
+
+        /// <summary>At least one patch is selected; an empty selection would patch nothing.</summary>
+        private bool HasPatchSelection =>
+            DisableUpdateBox.IsChecked == true ||
+            DevToolsHotkeyBox.IsChecked == true ||
+            RemoteWebPanelPreviewBox.IsChecked == true;
+
+        private void OnPatchSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            UpdateStartButtonState();
+        }
+
+        private void UpdateStartButtonState()
+        {
+            // A checkbox declared IsChecked="True" in XAML raises Checked before the parser
+            // reaches the button below it, so the field can still be null here.
+            if (StartButton == null)
+            {
+                return;
+            }
+
+            StartButton.IsEnabled = HasPatchSelection;
         }
 
         private void LoadStrategies()
@@ -80,8 +104,8 @@ namespace WandEnhancer.View.Popups
 
         private void OnPatchButtonClick(object sender, RoutedEventArgs e)
         {
-            if (DisableUpdateBox.IsChecked != true && DevToolsHotkeyBox.IsChecked != true &&
-                RemoteWebPanelPreviewBox.IsChecked != true)
+            // Defence in depth: the button is disabled in this state.
+            if (!HasPatchSelection)
             {
                 return;
             }
